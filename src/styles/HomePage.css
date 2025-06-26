@@ -1,5 +1,6 @@
 .home-page {
   min-height: 100vh;
+  width: 400vh;
   background: linear-gradient(to bottom, #e0f7ff, #ffffff);
   overflow-x: hidden;
   font-family: 'Segoe UI', sans-serif;
