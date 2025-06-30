@@ -1,42 +1,66 @@
-import React from 'react';
-import { Layout, Typography, Button } from 'antd';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import '../styles/HomePage.css';
 
-const { Title, Text } = Typography;
-const { Header, Content, Footer } = Layout;
+// Эмодзи для праздника
+const SnowEmoji = () => <span className="emoji emoji-snow">❄️</span>;
+const TreeEmoji = () => <span className="emoji emoji-tree">🎄</span>;
+const GiftEmoji = () => <span className="emoji emoji-gift">🎁</span>;
 
 const HomePage = () => {
-  return (
-    <Layout className="home-page">
-      <Header className="header">
-        <Title level={2} className="header-title">Тайный Санта</Title>
-        <Link to="/profile">
-          <Button type="link" className="profile-btn">Личный кабинет</Button>
-        </Link>
-      </Header>
+  const [activeSecondaryButton, setActiveSecondaryButton] = useState('events');
 
-      <div className="button-section">
-        <Link to="/invitations">
-          <Button type="primary" className="full-width-btn">Мои приглашения</Button>
-        </Link>
-        <Link to="/my-events">
-          <Button type="primary" className="full-width-btn">Мои мероприятия</Button>
-        </Link>
+  return (
+    <div className="secret-santa-container">
+      <ul className="snowflakes" aria-hidden="true">
+        {Array.from({ length: 30 }).map((_, i) => <li key={i} className="snowflake">❅</li>)}
+      </ul>
+      <ul className="twinkles" aria-hidden="true">
+        {Array.from({ length: 20 }).map((_, i) => <li key={i} className="twinkle">✨</li>)}
+      </ul>
+
+      <header className="main-header">
+        <div className="header-left-section">
+          <h1 className="header-title">
+            🎅 Тайный Санта 🎁
+          </h1>
+        </div>
+        <div className="header-right-section">
+          <button className="profile-btn">
+            🎁 Личный кабинет
+          </button>
+        </div>
+      </header>
+
+      <div className="secondary-header">
+        <button
+          className={`secondary-header-btn ${activeSecondaryButton === 'events' ? 'active' : ''}`}
+          onClick={() => setActiveSecondaryButton('events')}
+        >
+          🎄 Мои мероприятия
+        </button>
+        <div className="button-divider"></div>
+        <button
+          className={`secondary-header-btn ${activeSecondaryButton === 'invitations' ? 'active' : ''}`}
+          onClick={() => setActiveSecondaryButton('invitations')}
+        >
+          ❄️ Мои приглашения
+        </button>
       </div>
 
-      <Content className="main-content">
-        <div className="event-section">
-          <Button type="primary" className="create-event-btn">Создать мероприятие</Button>
-          <Text className="event-text">Создайте своё зимнее волшебство</Text>
-          <Text className="event-subtext">От 5 участников • Анонимно • Сюрприз 100%</Text>
-        </div>
-      </Content>
+      <main className="main-content">
+        <button className="create-event-btn">
+          🎄 Создать мероприятие
+        </button>
+      </main>
 
-      <Footer className="footer">
-        <Text className="footer-text">© 2025 Тайный Санта. Все права защищены. Сделано с ❄ и 🎁</Text>
-      </Footer>
-    </Layout>
+      <footer className="footer">
+        <div className="santa-run">
+          {/* для гиф */}
+          <img src="/images/santa-reindeer.gif" alt="Santa on sleigh" />
+        </div>
+        <p>© 2025 Тайный Санта. Все права защищены.</p>
+      </footer>
+    </div>
   );
 };
 
