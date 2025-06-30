@@ -1,19 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import EventsPage from './pages/EventsPage';
+import MyEventsPage from './pages/MyEventsPage';
+import ProfilePage from './pages/ProfilePage';
+import CreateEventPage from './pages/CreateEventPage';
 
-const App = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/my-events" element={<EventsPage />} /> {/* Здесь EventsPage */}
-        <Route path="/invitations" element={<HomePage />} />
-        {/* Добавьте остальные маршруты, если нужно */}
-      </Routes>
-    </Router>
-  );
-};
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/my-events" element={<MyEventsPage />} />
+      <Route path="/invitations" element={<HomePage />} />
+      <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/create-event" element={<CreateEventPage />} />
+    </Routes>
+  </Router>
+);
 
 export default App;
