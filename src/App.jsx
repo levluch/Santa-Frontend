@@ -4,6 +4,8 @@ import HomePage from './pages/HomePage';
 import MyEventsPage from './pages/MyEventsPage';
 import ProfilePage from './pages/ProfilePage';
 import CreateEventPage from './pages/CreateEventPage';
+import EventsPage from './pages/EventsPage';      // Страница "Новый год с друзьями"
+import EventPage from './pages/EventPage';        // Страница "Офисный Тайный Санта"
 
 const App = () => (
   <Router>
@@ -13,6 +15,8 @@ const App = () => (
       <Route path="/invitations" element={<HomePage />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/create-event" element={<CreateEventPage />} />
+      <Route path="/events" element={<EventsPage />} />
+      <Route path="/event/:id" element={<EventPage />} />
     </Routes>
   </Router>
 );

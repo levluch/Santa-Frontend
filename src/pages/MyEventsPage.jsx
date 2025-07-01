@@ -4,8 +4,8 @@ import '../styles/index.css';
 import '../styles/MyEventsPage.css';
 
 const mockEvents = [
-  { id: 1, name: 'Новый год с друзьями', date: '2025-12-25' },
-  { id: 2, name: 'Офисный Тайный Санта', date: '2025-12-20' },
+  { id: 1, name: 'Новый год с друзьями (организатор)', date: '2025-12-25', route: '/events' },
+  { id: 2, name: 'Офисный Тайный Санта', date: '2025-12-20', route: '/event/2' },
 ];
 
 const MyEventsPage = () => {
@@ -28,7 +28,12 @@ const MyEventsPage = () => {
       <main className="events-list">
         <h2>Мои мероприятия</h2>
         {mockEvents.map(ev => (
-          <div key={ev.id} className="event-card">
+          <div
+            key={ev.id}
+            className="event-card"
+            onClick={() => navigate(ev.route)}
+            style={{ cursor: 'pointer' }}
+          >
             <h3>{ev.name}</h3>
             <p>Дата жеребьёвки: {ev.date}</p>
           </div>
