@@ -36,7 +36,7 @@ const HomePage = () => {
         <div className="button-divider"></div>
         <button
           className={`secondary-header-btn ${activeSecondaryButton === 'invitations' ? 'active' : ''}`}
-          onClick={() => setActiveSecondaryButton('invitations')}
+          onClick={() => { setActiveSecondaryButton('invitations'); navigate('/invitations'); }}
         >
           ❄️ Мои приглашения
         </button>

@@ -1,5 +1,6 @@
 import React from 'react';
-import './EventPage.css';
+import '../styles/index.css';
+import '../styles/EventPage.css';
 
 const EventPage = () => {
   // Пример данных
@@ -15,17 +16,17 @@ const EventPage = () => {
   ];
 
   return (
-    <div className="eventPage">
-      <header className="header">
-        <h1>Мои мероприятия</h1>
-        <button onClick={() => window.location.href = '/'} className="home-btn">
-          Главная
+    <div className="secret-santa-container">
+      <header className="main-header">
+        <h1 className="header-title">🎅 Тайный Санта 🎁</h1>
+        <button onClick={() => window.location.href = '/'} className="header-btn">
+          🏠 Главная
         </button>
       </header>
 
-      <main className="content">
+      <main className="main-content">
         <section className="recipient-section">
-          <h2>Получатель</h2>
+          <h2>Получатель и его вишлист</h2>
           <div className="recipient-info">
             <p><strong>Имя:</strong> {recipient.name}</p>
             <p><strong>Tg:</strong> {recipient.tg}</p>
@@ -33,7 +34,6 @@ const EventPage = () => {
         </section>
 
         <section className="wishlist-section">
-          <h2>Вишлист получателя</h2>
           <ul className="wishlist">
             {wishlist.map((item, index) => (
               <li key={index}>{item}</li>

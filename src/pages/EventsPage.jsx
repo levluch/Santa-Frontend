@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './EventsPage.css';
+import '../styles/index.css';
+import '../styles/EventsPage.css';
 
 function EventsPage() {
   const [participants, setParticipants] = useState([
@@ -68,50 +69,54 @@ function EventsPage() {
   };
 
   return (
-    <div className="events-page">
-      <header className="header">
-        <h1>Мои мероприятия</h1>
-        <button onClick={() => window.location.href = '/'} className="home-btn">
-          Главная
+    <div className="secret-santa-container">
+      <header className="main-header">
+        <h1 className="header-title">🎅 Тайный Санта 🎁</h1>
+        <button onClick={() => window.location.href = '/'} className="header-btn">
+          🏠 Главная
         </button>
       </header>
 
-      <main className="content">
-        <div className="participants-list">
-          <h3>Участники:</h3>
-          <ul>
+      <main className="main-content">
+        <div className="participants-section">
+          <h2>Участники:</h2>
+          <ul className="participants-list">
             {participants.map(p => (
-              <li key={p.id}>
-                {p.firstName} {p.lastName} (@{p.tg}) {p.isMarried ? '👰' : ''}
-              </li>
-            ))}
-          </ul>
-        </div>
+            <li key={p.id} className="participant-item">
+              {p.firstName} {p.lastName} (@{p.tg}) 
+              {p.isMarried && (<> 👰
+              {p.partnerWorksSameOffice && ' есть партнер, который работает в том же офисе 🏬'}
+            </> )}
+            </li>
+          ))}
+        </ul>
 
-        <div className="buttons-container">
-          <button onClick={() => setShowModal(true)} className="add-btn">
-            Добавить участника
-          </button>
-          <button onClick={startDraw} disabled={participants.length < 3} className="draw-btn">
-            Начать жеребьевку
-          </button>
-        </div>
+    <div className="action-buttons" style={{ marginTop: '20px' }}>
+      <button onClick={() => setShowModal(true)} className="header-btn" style={{ marginRight: '10px' }}>
+        Добавить участника
+      </button>
+      <br></br>
+      <button onClick={startDraw} disabled={participants.length < 3} className="header-btn">
+        Начать жеребьевку
+      </button>
+    </div>
+  </div>
 
-        {results && (
-          <div className="results">
-            <h3>Результаты:</h3>
-            <ul>
-              {results.map((pair, i) => (
-                <li key={i}>{pair.from} → {pair.to}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+  {results && (
+    <div className="results-section">
+      <h2>Результаты:</h2>
+      <ul className="results-list">
+        {results.map((pair, i) => (
+          <li key={i} className="result-item">{pair.from} → {pair.to}</li>
+        ))}
+      </ul>
+    </div>
+  )}
 
         {showModal && (
-          <div className="modal">
+          <div className="modal-overlay">
             <div className="modal-content">
-              <h3>Добавить участника</h3>
+              <h3 className="modal-title">Добавить участника</h3>
               <div className="form-group">
                 <label>Имя:</label>
                 <input
@@ -120,6 +125,7 @@ function EventsPage() {
                   value={newParticipant.firstName}
                   onChange={handleInputChange}
                   required
+                  className="form-input"
                 />
               </div>
               <div className="form-group">
@@ -130,6 +136,7 @@ function EventsPage() {
                   value={newParticipant.lastName}
                   onChange={handleInputChange}
                   required
+                  className="form-input"
                 />
               </div>
               <div className="form-group">
@@ -140,6 +147,7 @@ function EventsPage() {
                   value={newParticipant.tg}
                   onChange={handleInputChange}
                   required
+                  className="form-input"
                 />
               </div>
               <div className="form-group checkbox-group">
@@ -149,8 +157,9 @@ function EventsPage() {
                   checked={newParticipant.isMarried}
                   onChange={handleInputChange}
                   id="isMarried"
+                  className="checkbox-input"
                 />
-                <label htmlFor="isMarried">Замужем/женат</label>
+                <label htmlFor="isMarried" className="checkbox-label">Замужем/женат</label>
               </div>
               {newParticipant.isMarried && (
                 <div className="form-group checkbox-group">
@@ -160,15 +169,16 @@ function EventsPage() {
                     checked={newParticipant.partnerWorksSameOffice}
                     onChange={handleInputChange}
                     id="partnerWorksSameOffice"
+                    className="checkbox-input"
                   />
-                  <label htmlFor="partnerWorksSameOffice">Партнер работает с вами офисе</label>
+                  <label htmlFor="partnerWorksSameOffice" className="checkbox-label">Партнер работает с вами офисе</label>
                 </div>
               )}
               <div className="modal-buttons">
-                <button onClick={addParticipant} className="confirm-btn">
+                <button onClick={addParticipant} className="header-btn">
                   Добавить
                 </button>
-                <button onClick={() => setShowModal(false)} className="cancel-btn">
+                <button onClick={() => setShowModal(false)} className="header-btn cancel-btn">
                   Отмена
                 </button>
               </div>

@@ -1,0 +1,107 @@
+/* Основные стили контейнера */
+.invitations-main {
+  padding: 20px;
+}
+
+/* Стили для разделов */
+.invitations-section {
+  margin-bottom: 40px;
+}
+
+.pending-section {
+  margin-bottom: 30px;
+}
+
+.accepted-section {
+  margin-top: 30px;
+}
+
+.subsection-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.3rem;
+  color: #2A2A2A;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #A8E6CF;
+}
+
+/* Стили списка и карточек */
+.invitations-list {
+  display: flex;
+  gap: 20px;
+}
+
+.invitation-card {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.pending-card {
+  margin-bottom: 15px;
+}
+
+.accepted-card {
+  margin-top: 15px;
+  background: rgba(168, 230, 207, 0.2);
+  border-left: 4px solid #A8E6CF;
+}
+
+.invitation-info {
+  flex: 1;
+}
+
+.invitation-game {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: #2A2A2A;
+  margin: 0 0 10px 0;
+}
+
+.invitation-organizer {
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+}
+
+.invitation-status {
+  color: #2A2A2A;
+  font-weight: 500;
+  margin: 0;
+  align-self: flex-end;
+}
+
+.invitation-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+/* Кнопки */
+.accept-btn {
+  background-color: #A8E6CF;
+  border-color: #75C9B7;
+}
+
+.cancel-btn {
+  background-color: rgba(255, 170, 165, 0.3);
+  border-color: #FFAAA5;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+  .invitation-actions {
+    flex-direction: column;
+  }
+  
+  .header-btn {
+    width: 100%;
+  }
+  
+  .invitations-list {
+    gap: 15px;
+  }
+}
