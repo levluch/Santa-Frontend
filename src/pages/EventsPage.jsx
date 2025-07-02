@@ -1,51 +1,66 @@
-import React, { useState } from 'react';  // Добавлен импорт useState
-import '../styles/EventsPage.css'
+import React, { useState } from 'react';
+import './EventsPage.css';
 
 function EventsPage() {
   const [participants, setParticipants] = useState([
-    { id: 1, name: 'Анна', tg: 'doll_nik' },
-    { id: 2, name: 'Борис', tg: 'winner_one' },
+    { id: 1, firstName: 'Анна', lastName: 'Иванова', tg: 'doll_nik', isMarried: false, partnerWorksSameOffice: false },
+    { id: 2, firstName: 'Борис', lastName: 'Петров', tg: 'winner_one', isMarried: true, partnerWorksSameOffice: true },
   ]);
-  const [newName, setNewName] = useState('');
-  const [newTg, setNewTg] = useState('');  // Исправлено название переменной на setNewTg
+  const [showModal, setShowModal] = useState(false);
   const [results, setResults] = useState(null);
+  const [newParticipant, setNewParticipant] = useState({
+    firstName: '',
+    lastName: '',
+    tg: '',
+    isMarried: false,
+    partnerWorksSameOffice: false
+  });
 
-  // Функция добавления участника
-  const addParticipant = () => {
-    if (newName.trim() && newTg.trim()) {
-      const newParticipant = {
-        id: participants.length + 1,
-        name: newName.trim(),
-        tg: newTg.trim()
-      };
-      setParticipants([...participants, newParticipant]);
-      setNewName('');
-      setNewTg('');
-    } else {
-      alert('Пожалуйста, заполните оба поля: имя и Telegram.');
-    }
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setNewParticipant({
+      ...newParticipant,
+      [name]: type === 'checkbox' ? checked : value
+    });
   };
 
-  // Функция жеребьёвки
+  const addParticipant = () => {
+    if (!newParticipant.firstName.trim() || !newParticipant.lastName.trim() || !newParticipant.tg.trim()) {
+      alert('Пожалуйста, заполните обязательные поля: имя, фамилия и Telegram.');
+      return;
+    }
+
+    const participant = {
+      id: participants.length + 1,
+      ...newParticipant
+    };
+
+    setParticipants([...participants, participant]);
+    setNewParticipant({
+      firstName: '',
+      lastName: '',
+      tg: '',
+      isMarried: false,
+      partnerWorksSameOffice: false
+    });
+    setShowModal(false);
+  };
+
   const startDraw = () => {
     if (participants.length < 3) {
       alert('Для жеребьёвки нужно минимум 3 участника');
       return;
     }
 
-    // Перемешиваем участников
     const shuffled = [...participants].sort(() => Math.random() - 0.5);
-
-    // Формируем пары, чтобы никто не получил самого себя
     const pairs = participants.map((p, i) => {
-      // Если совпадает имя, берем следующего по циклу
       let toIndex = i;
       if (shuffled[i].id === p.id) {
         toIndex = (i + 1) % shuffled.length;
       }
       return {
-        from: p.name,
-        to: shuffled[toIndex].name
+        from: `${p.firstName} ${p.lastName}`,
+        to: `${shuffled[toIndex].firstName} ${shuffled[toIndex].lastName}`
       };
     });
 
@@ -53,59 +68,111 @@ function EventsPage() {
   };
 
   return (
-    <div className="page">
+    <div className="events-page">
       <header className="header">
-        <h1>Тайный Санта</h1>
+        <h1>Мои мероприятия</h1>
         <button onClick={() => window.location.href = '/'} className="home-btn">
           Главная
         </button>
       </header>
 
       <main className="content">
-        <h2>Мои мероприятия</h2>
-
-        <div className="section">
+        <div className="participants-list">
           <h3>Участники:</h3>
           <ul>
             {participants.map(p => (
-              <li key={p.id}>{p.name} ({p.tg})</li>
+              <li key={p.id}>
+                {p.firstName} {p.lastName} (@{p.tg}) {p.isMarried ? '👰' : ''}
+              </li>
             ))}
           </ul>
         </div>
 
-        <div className="section">
-          <h3>Добавить участника:</h3>
-          <div className="add-form">
-            <input
-              type="text"
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              placeholder="Имя"
-            />
-            <input
-              type="text"  // Исправлено с type="tg" на type="text"
-              value={newTg}
-              onChange={(e) => setNewTg(e.target.value)}  // Исправлено с setNewtg на setNewTg
-              placeholder="Telegram"
-            />
-            <button onClick={addParticipant}>Добавить</button>
-          </div>
-        </div>
-
-        <div className="section">
-          <button onClick={startDraw} disabled={participants.length < 3}>
+        <div className="buttons-container">
+          <button onClick={() => setShowModal(true)} className="add-btn">
+            Добавить участника
+          </button>
+          <button onClick={startDraw} disabled={participants.length < 3} className="draw-btn">
             Начать жеребьевку
           </button>
         </div>
 
         {results && (
-          <div className="section">
+          <div className="results">
             <h3>Результаты:</h3>
             <ul>
               {results.map((pair, i) => (
                 <li key={i}>{pair.from} → {pair.to}</li>
               ))}
             </ul>
+          </div>
+        )}
+
+        {showModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <h3>Добавить участника</h3>
+              <div className="form-group">
+                <label>Имя:</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={newParticipant.firstName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Фамилия:</label>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={newParticipant.lastName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Telegram:</label>
+                <input
+                  type="text"
+                  name="tg"
+                  value={newParticipant.tg}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group checkbox-group">
+                <input
+                  type="checkbox"
+                  name="isMarried"
+                  checked={newParticipant.isMarried}
+                  onChange={handleInputChange}
+                  id="isMarried"
+                />
+                <label htmlFor="isMarried">Замужем/женат</label>
+              </div>
+              {newParticipant.isMarried && (
+                <div className="form-group checkbox-group">
+                  <input
+                    type="checkbox"
+                    name="partnerWorksSameOffice"
+                    checked={newParticipant.partnerWorksSameOffice}
+                    onChange={handleInputChange}
+                    id="partnerWorksSameOffice"
+                  />
+                  <label htmlFor="partnerWorksSameOffice">Партнер работает с вами офисе</label>
+                </div>
+              )}
+              <div className="modal-buttons">
+                <button onClick={addParticipant} className="confirm-btn">
+                  Добавить
+                </button>
+                <button onClick={() => setShowModal(false)} className="cancel-btn">
+                  Отмена
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </main>
