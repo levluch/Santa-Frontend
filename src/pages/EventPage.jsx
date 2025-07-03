@@ -8,7 +8,7 @@ const EventPage = () => {
     name: "Ирина Ваг",
     tg: "ira_vag"
   };
-
+ 
   const wishlist = [
     "Книга 1990-х",
     "Набор для рисования",

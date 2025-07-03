@@ -3,6 +3,16 @@
   padding: 20px;
 }
 
+/* Заголовок раздела по центру */
+.section-title {
+  text-align: center;
+  width: 100%;
+  margin: 1.5rem 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #2A2A2A;
+}
+
 /* Стили для разделов */
 .invitations-section {
   margin-bottom: 40px;

@@ -17,7 +17,7 @@
   transition: background 0.3s ease;
 }
 .secondary-header-btn:hover {
-  background: #A8E6CF;
+  background: #81d6e6bf;
   color: white;
 }
 .secondary-header-btn.active {
